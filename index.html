@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEAR ATF // Технологическая Студия</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gear: {
+                            fire: '#FF3300',
+                            flame: '#FF7700',
+                            gold: '#FFCC00',
+                            dark: '#06070a',
+                            panel: 'rgba(12, 14, 22, 0.85)',
+                            border: 'rgba(255, 51, 0, 0.3)',
+                            gvozd: '#FF0055'
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        mono: ['"Share Tech Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            font-family: 'Rajdhani', sans-serif;
+            cursor: none !important;
+        }
+
+        h1, h2, h3, .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .font-mono-tech {
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        body {
+            background-color: #050608;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Styling */
+        .glass-panel {
+            background: rgba(10, 12, 18, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 69, 0, 0.25);
+        }
+
+        .glass-card {
+            background: rgba(18, 22, 34, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .glass-card:hover {
+            background: rgba(28, 34, 52, 0.85);
+            border-color: rgba(255, 85, 0, 0.7);
+            box-shadow: 0 12px 40px -10px rgba(255, 69, 0, 0.45);
+        }
+
+        /* Interactive Fire Cursor */
+        #cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 8px; height: 8px;
+            background-color: #FF7700;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 12px #FF3300, 0 0 20px #FF3300;
+        }
+
+        #cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            width: 38px; height: 38px;
+            border: 1.5px solid rgba(255, 119, 0, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s ease, height 0.2s ease, transform 0.1s ease-out;
+        }
+
+        /* Text Gradients */
+        .text-gradient-fire {
+            background: linear-gradient(135deg, #FFE600 0%, #FF7700 50%, #FF1100 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-gvozd {
+            background: linear-gradient(135deg, #FF007F 0%, #FF0055 50%, #FF5500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Tech Grid Background Pattern */
+        .bg-tech-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 69, 0, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 69, 0, 0.04) 1px, transparent 1px);
+        }
+
+        /* Retro CRT Scanline Overlay */
+        .scanline {
+            position: relative;
+            overflow: hidden;
+        }
+        .scanline::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%);
+            background-size: 100% 4px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Phone Screen Frame Styling */
+        .phone-frame {
+            border-radius: 36px;
+            border: 4px solid #2a2e3d;
+            box-shadow: 0 0 25px rgba(255, 85, 0, 0.3);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050608; }
+        ::-webkit-scrollbar-thumb { background: #3d1705; border-radius: 4px; border: 1px solid rgba(255,69,0,0.4); }
+        ::-webkit-scrollbar-thumb:hover { background: #ff4500; }
+    </style>
+</head>
+<body class="bg-tech-grid antialiased selection:bg-gear-fire selection:text-black">
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+
+    <!-- Sparks Background Particle Canvas -->
+    <canvas id="sparks-canvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-4 md:px-10" id="navbar">
+        <div class="max-w-7xl mx-auto flex items-center justify-between glass-panel rounded-2xl py-3 px-6 shadow-2xl">
+            
+            <!-- Logo with Animated Flaming Gear -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="relative w-12 h-12 flex items-center justify-center">
+                    <canvas id="logo-flaming-gear" width="55" height="55" class="absolute inset-0 drop-shadow-[0_0_12px_rgba(255,69,0,0.85)]"></canvas>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-orbitron font-black text-xl tracking-wider text-white group-hover:text-gear-fire transition-colors">GEAR <span class="text-gear-fire">ATF</span></span>
+                    <span class="text-[9px] font-mono-tech tracking-widest text-gear-flame -mt-1 uppercase">Tech Studio</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-semibold tracking-wider uppercase text-gray-300">
+                <a href="#ecosystem" class="hover:text-gear-fire transition-colors">Проекты</a>
+                <a href="#os-section" class="hover:text-gear-fire transition-colors">ОС (UPC/UPH)</a>
+                <a href="#gvozd" class="hover:text-gear-gvozd transition-colors">Gvozd Production</a>
+                <a href="#terminal" class="hover:text-gear-fire transition-colors">Терминал</a>
+                <a href="#contact" class="hover:text-gear-fire transition-colors">Контакты</a>
+            </nav>
+
+            <!-- Action Button -->
+            <a href="#contact" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-gear-fire to-gear-flame hover:from-gear-flame hover:to-gear-gold text-black font-bold font-orbitron text-xs tracking-wider uppercase transition-all duration-300 shadow-lg shadow-gear-fire/30 hover:scale-105">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Связаться</span>
+            </a>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="lg:hidden text-gear-fire text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-4 right-4 glass-panel rounded-2xl p-6 flex flex-col space-y-4 text-center font-orbitron text-sm tracking-wider uppercase shadow-2xl">
+            <a href="#ecosystem" class="mobile-link text-gray-300 hover:text-gear-fire py-2">Проекты</a>
+            <a href="#os-section" class="mobile-link text-gray-300 hover:text-gear-fire py-2">ОС (UPC/UPH)</a>
+            <a href="#gvozd" class="mobile-link text-gear-gvozd hover:text-white py-2">Gvozd Production</a>
+            <a href="#terminal" class="mobile-link text-gray-300 hover:text-gear-fire py-2">Терминал</a>
+            <a href="#contact" class="mobile-link text-gray-300 hover:text-gear-fire py-2">Контакты</a>
+        </div>
+    </header>
+
+    <section class="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-6 z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Hero Content Text -->
+            <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-gear-fire/40 text-gear-flame text-xs font-mono-tech tracking-wider uppercase">
+                    <span class="w-2.5 h-2.5 rounded-full bg-gear-fire animate-ping"></span>
+                    <span>HARDWARE & SOFTWARE ECOSYSTEM // GEAR ATF</span>
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl lg:text-6xl font-black leading-none tracking-tight text-white uppercase">
+                    GEAR ATF — <br>
+                    <span class="text-gradient-fire">Технологии в огне</span><br>
+                    <span class="text-gray-200">будущего</span>
+                </h1>
+
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                    Создаём революционный сенсорный смартфон <span class="text-gear-flame font-semibold">voxel</span>, ноутбук <span class="text-gear-flame font-semibold">WoWyB</span>, планшет <span class="text-gear-flame font-semibold">WoOx</span>, универсальные операционные системы <span class="text-gear-fire font-semibold">UPC</span> и <span class="text-gear-fire font-semibold">UPH</span> (устанавливаемые на <span class="text-white font-semibold">любые</span> устройства), захватывающие игры и анимационное подразделение <span class="text-gear-gvozd font-semibold">Gvozd production</span> («МегаКИпишь»).
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#ecosystem" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-gear-fire to-gear-flame hover:from-gear-flame hover:to-gear-gold text-black font-orbitron font-bold text-sm tracking-widest uppercase transition-all duration-300 shadow-xl shadow-gear-fire/30 hover:scale-105">
+                        Все Проекты
+                    </a>
+                    <a href="#os-section" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card hover:bg-white/10 text-gray-200 font-orbitron font-semibold text-sm tracking-widest uppercase transition-all duration-300 border border-gear-fire/30 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-microchip text-gear-fire"></i>
+                        <span>ОС UPC & UPH</span>
+                    </a>
+                </div>
+
+                <!-- Metrics Dashboard -->
+                <div class="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 max-w-lg mx-auto lg:mx-0">
+                    <div>
+                        <div class="text-2xl font-black font-orbitron text-gear-fire">5+</div>
+                        <div class="text-xs font-mono-tech text-gray-400 uppercase">Флагманов & Игр</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black font-orbitron text-gear-gold">2</div>
+                        <div class="text-xs font-mono-tech text-gray-400 uppercase">Универсальные ОС</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black font-orbitron text-gear-gvozd">100%</div>
+                        <div class="text-xs font-mono-tech text-gray-400 uppercase">Собственный Код</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Hero Large Flaming Gear 3D Canvas Showcase -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="relative w-full max-w-md aspect-square rounded-3xl glass-panel p-6 flex flex-col items-center justify-center border border-gear-fire/40 shadow-2xl group">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-gear-fire/20 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-gear-flame/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <!-- Canvas Engine for Flaming Gear Symbol -->
+                    <canvas id="hero-flaming-gear-canvas" width="380" height="380" class="z-10 drop-shadow-[0_0_35px_rgba(255,69,0,0.85)]"></canvas>
+                    
+                    <div class="absolute bottom-4 text-center z-20">
+                        <span class="text-xs font-mono-tech text-gear-gold uppercase tracking-widest flex items-center gap-2 justify-center">
+                            <i class="fa-solid fa-fire text-gear-fire animate-bounce"></i>
+                            Эмблема Gear ATF в постоянном огненном пламени
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="ecosystem" class="py-24 px-6 relative z-10 bg-black/40">
+        <div class="max-w-7xl mx-auto space-y-12">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-gear-fire/20 pb-8">
+                <div class="space-y-3">
+                    <span class="text-xs font-mono-tech text-gear-fire uppercase tracking-widest">// HARDWARE & SOFTWARE UNIVERSE</span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white uppercase">Экосистема <span class="text-gradient-fire">Gear ATF</span></h2>
+                </div>
+
+                <!-- Interactive Filters -->
+                <div class="flex flex-wrap gap-2" id="eco-filters">
+                    <button data-filter="all" class="filter-btn active px-5 py-2 rounded-xl text-xs font-orbitron font-semibold uppercase tracking-wider bg-gear-fire text-black shadow-lg shadow-gear-fire/30">Все Проекты</button>
+                    <button data-filter="gadget" class="filter-btn px-5 py-2 rounded-xl text-xs font-orbitron font-semibold uppercase tracking-wider glass-card text-gray-300 hover:text-gear-fire">Гаджеты</button>
+                    <button data-filter="game" class="filter-btn px-5 py-2 rounded-xl text-xs font-orbitron font-semibold uppercase tracking-wider glass-card text-gray-300 hover:text-gear-fire">Игры</button>
+                </div>
+            </div>
+
+            <!-- Ecosystem Grid Items -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="ecosystem-grid">
+                
+                <!-- voxel Touchscreen Smartphone -->
+                <div class="eco-card glass-card rounded-3xl p-6 flex flex-col justify-between group" data-category="gadget">
+                    <div class="space-y-4">
+                        <div class="h-52 rounded-2xl bg-gradient-to-br from-slate-900 via-gray-900 to-black p-4 relative overflow-hidden border border-gear-fire/40 flex items-center justify-center">
+                            <div class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-gear-fire/20 border border-gear-fire/40 text-gear-flame text-[10px] font-mono-tech uppercase">Touch Smartphone</div>
+                            
+                            <!-- Smartphone Mockup Icon -->
+                            <div class="text-center space-y-2">
+                                <div class="w-20 h-32 mx-auto rounded-2xl border-2 border-gear-flame bg-black p-1 shadow-lg shadow-gear-fire/30 flex flex-col justify-between group-hover:scale-105 transition-transform duration-500">
+                                    <div class="w-8 h-1 bg-gray-700 rounded-full mx-auto mt-1"></div>
+                                    <div class="my-auto text-center">
+                                        <i class="fa-solid fa-mobile-screen-button text-3xl text-gear-gold"></i>
+                                    </div>
+                                    <div class="w-2 h-2 rounded-full bg-gear-fire mx-auto mb-1"></div>
+                                </div>
+                                <div class="text-[11px] font-mono-tech text-gear-gold">UPH OS Native</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-2xl font-black text-white group-hover:text-gear-flame transition-colors">voxel</h3>
+                                <span class="text-xs font-mono-tech px-2 py-0.5 rounded bg-gear-fire/20 text-gear-flame">Смартфон</span>
+                            </div>
+                            <p class="text-sm text-gray-400">
+                                Флагманский сенсорный смартфон нового поколения от Gear ATF. Сочный сенсорный дисплей, максимальное быстродействие и работа на базе UPH OS.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 mt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono-tech text-gear-gold">
+                        <span>Экран: Full Touch Display</span>
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </div>
+                </div>
+
+                <!-- WoWyB Laptop -->
+                <div class="eco-card glass-card rounded-3xl p-6 flex flex-col justify-between group" data-category="gadget">
+                    <div class="space-y-4">
+                        <div class="h-52 rounded-2xl bg-gradient-to-br from-slate-900 via-gray-900 to-black p-4 relative overflow-hidden border border-white/10 flex items-center justify-center">
+                            <div class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-gear-fire/20 border border-gear-fire/40 text-gear-flame text-[10px] font-mono-tech uppercase">Laptop</div>
+                            <div class="text-center space-y-2">
+                                <i class="fa-solid fa-laptop text-6xl text-gear-fire group-hover:scale-110 transition-transform duration-500"></i>
+                                <div class="text-xs font-mono-tech text-gray-400">UPC OS Pre-installed</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="text-2xl font-black text-white group-hover:text-gear-flame transition-colors">WoWyB</h3>
+                            <p class="text-sm text-gray-400">Мощный технологичный ноутбук от Gear ATF. Высокая производительность для вычислений, 3D-графики и разработки под UPC OS.</p>
+                        </div>
+                    </div>
+                    <div class="pt-6 mt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono-tech text-gear-gold">
+                        <span>Архитектура: Gear Architecture</span>
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                </div>
+
+                <!-- WoOx Tablet -->
+                <div class="eco-card glass-card rounded-3xl p-6 flex flex-col justify-between group" data-category="gadget">
+                    <div class="space-y-4">
+                        <div class="h-52 rounded-2xl bg-gradient-to-br from-slate-900 via-gray-900 to-black p-4 relative overflow-hidden border border-white/10 flex items-center justify-center">
+                            <div class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-gear-fire/20 border border-gear-fire/40 text-gear-flame text-[10px] font-mono-tech uppercase">Tablet</div>
+                            <div class="text-center space-y-2">
+                                <i class="fa-solid fa-tablet-screen-button text-6xl text-gear-gold group-hover:scale-110 transition-transform duration-500"></i>
+                                <div class="text-xs font-mono-tech text-gray-400">UPH OS Tablet Edition</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="text-2xl font-black text-white group-hover:text-gear-gold transition-colors">WoOx</h3>
+                            <p class="text-sm text-gray-400">Универсальный планшет с точным сенсорным экраном и поддержкой электронного пера. Для работы, графики и игр.</p>
+                        </div>
+                    </div>
+                    <div class="pt-6 mt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono-tech text-gear-gold">
+                        <span>Дисплей: High-Precision Touch</span>
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                </div>
+
+                <!-- Fly Forward RPG Arcade Game -->
+                <div class="eco-card glass-card rounded-3xl p-6 flex flex-col justify-between group" data-category="game">
+                    <div class="space-y-4">
+                        <div class="h-52 rounded-2xl bg-gradient-to-br from-indigo-950 via-slate-900 to-black p-4 relative overflow-hidden border border-white/10 flex items-center justify-center">
+                            <div class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-sky-500/20 border border-sky-500/40 text-sky-400 text-[10px] font-mono-tech uppercase">RPG Arcade</div>
+                            <div class="text-center space-y-2">
+                                <i class="fa-solid fa-rocket text-6xl text-sky-400 group-hover:rotate-12 transition-transform duration-500"></i>
+                                <div class="text-xs font-mono-tech text-gray-400">High-Speed Gameplay</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="text-2xl font-black text-white group-hover:text-sky-300 transition-colors">Fly Forward</h3>
+                            <p class="text-sm text-gray-400">Динамичная RPG Arcade игра с полётами, кастомизацией техники, аркадными сражениями и динамичными уровнями.</p>
+                        </div>
+                    </div>
+                    <div class="pt-6 mt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono-tech text-sky-400">
+                        <span>Поддержка: UPC / UPH</span>
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                </div>
+
+                <!-- Telephone Horror Game -->
+                <div class="eco-card glass-card rounded-3xl p-6 flex flex-col justify-between group" data-category="game">
+                    <div class="space-y-4">
+                        <div class="h-52 rounded-2xl bg-gradient-to-br from-red-950 via-black to-slate-950 p-4 relative overflow-hidden border border-red-500/30 flex items-center justify-center">
+                            <div class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-red-600/30 border border-red-500/50 text-red-400 text-[10px] font-mono-tech uppercase">Horror Survival</div>
+                            <div class="text-center space-y-2">
+                                <i class="fa-solid fa-phone-slash text-6xl text-red-500 group-hover:animate-pulse transition-transform duration-500"></i>
+                                <div class="text-xs font-mono-tech text-red-400">Horror Game</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="text-2xl font-black text-white group-hover:text-red-400 transition-colors">Telephone <span class="text-xs text-red-500 font-mono-tech">(Horror)</span></h3>
+                            <p class="text-sm text-gray-400">Атмосферный хоррор о загадочных звонках из темноты. Напряженное исследование закрытых локаций и выживание.</p>
+                        </div>
+                    </div>
+                    <div class="pt-6 mt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono-tech text-red-400">
+                        <span>Жанр: Хоррор / Триллер</span>
+                        <i class="fa-solid fa-skull"></i>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section id="os-section" class="py-24 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto space-y-16">
+            
+            <div class="text-center space-y-4">
+                <span class="text-xs font-mono-tech text-gear-fire uppercase tracking-widest">// UNIVERSAL OPERATING SYSTEMS</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white uppercase">Операционные Системы <span class="text-gradient-fire">UPC & UPH</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Универсальные ОС от Gear ATF. Вы можете <span class="text-white font-semibold">установить их абсолютно на любое устройство</span>!
+                </p>
+            </div>
+
+            <!-- OS System Highlights -->
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- UPH OS Mobile Card -->
+                <div class="glass-panel rounded-3xl p-8 space-y-6 border border-gear-flame/30 relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-gear-flame/20 border border-gear-flame/40 flex items-center justify-center text-gear-flame text-2xl font-bold">
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-black text-white">UPH</h3>
+                                <p class="text-xs font-mono-tech text-gear-flame">Universal Phone OS</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-gear-flame/10 text-gear-flame text-xs font-mono-tech border border-gear-flame/30">Mobile & Touch</span>
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Операционная система для сенсорных смартфонов (например, <span class="text-gear-gold font-semibold">voxel</span>), планшетов (<span class="text-gear-gold font-semibold">WoOx</span>) и любых сторонних мобильных гаджетов. Ультрабыстрый сенсорный интерфейс и оптимизация.
+                    </p>
+
+                    <ul class="space-y-3 text-xs text-gray-300 font-mono-tech">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gear-flame"></i> Установка на любые сенсорные смартфоны и планшеты</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gear-flame"></i> Низкое энергопотребление и мгновенный отклик</li>
+                    </ul>
+                </div>
+
+                <!-- UPC OS PC Card -->
+                <div class="glass-panel rounded-3xl p-8 space-y-6 border border-gear-fire/30 relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-gear-fire/20 border border-gear-fire/40 flex items-center justify-center text-gear-fire text-2xl font-bold">
+                                <i class="fa-solid fa-desktop"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-black text-white">UPC</h3>
+                                <p class="text-xs font-mono-tech text-gear-fire">Universal PC OS</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-gear-fire/10 text-gear-fire text-xs font-mono-tech border border-gear-fire/30">Computer Edition</span>
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Операционная система для ПК и ноутбуков (<span class="text-gear-flame font-semibold">WoWyB</span>). Многозадачная рабочая среда для сложных разработок, 3D-графики и высоких игровых нагрузок.
+                    </p>
+
+                    <ul class="space-y-3 text-xs text-gray-300 font-mono-tech">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gear-fire"></i> Установка на любые стационарные компьютеры и ноутбуки</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gear-fire"></i> Максимальное раскрытие потенциала железа</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Live Interactive OS Simulator Box -->
+            <div class="glass-panel rounded-3xl p-6 md:p-8 space-y-6 border border-gear-fire/40 shadow-2xl">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-white/10 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
+                        <span class="text-xs font-mono-tech text-gray-400 ms-2">LIVE OS DEMO SIMULATOR</span>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button id="sim-btn-upc" class="px-4 py-1.5 rounded-lg text-xs font-orbitron font-bold uppercase transition-all bg-gear-fire text-black shadow-md">UPC OS (Компьютер)</button>
+                        <button id="sim-btn-uph" class="px-4 py-1.5 rounded-lg text-xs font-orbitron font-bold uppercase transition-all bg-white/10 text-gray-300 hover:text-white">UPH OS (Смартфон voxel)</button>
+                    </div>
+                </div>
+
+                <!-- OS Viewport Canvas / Area -->
+                <div id="os-viewport" class="h-96 rounded-2xl bg-slate-950 border border-white/10 relative overflow-hidden scanline p-6 flex flex-col justify-between">
+                    
+                    <!-- OS Top Header Bar -->
+                    <div class="flex justify-between items-center text-xs font-mono-tech text-gear-flame z-10">
+                        <span id="os-sys-title"><i class="fa-solid fa-desktop me-2"></i>Gear ATF UPC OS Active</span>
+                        <div class="flex items-center gap-4">
+                            <span><i class="fa-solid fa-wifi me-1"></i> GearNet 5G</span>
+                            <span id="os-clock">12:00</span>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Desktop App Grid -->
+                    <div id="os-apps-container" class="grid grid-cols-2 sm:grid-cols-4 gap-6 my-auto max-w-md mx-auto text-center z-10">
+                        
+                        <button onclick="openOSApp('Терминал')" class="space-y-2 group">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-gear-fire/20 border border-gear-fire/40 flex items-center justify-center text-gear-fire text-2xl group-hover:scale-110 transition-transform shadow-lg shadow-gear-fire/20">
+                                <i class="fa-solid fa-terminal"></i>
+                            </div>
+                            <span class="text-[11px] font-mono-tech text-gray-300 block">Терминал</span>
+                        </button>
+
+                        <button onclick="openOSApp('Fly Forward')" class="space-y-2 group">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-sky-400 text-2xl group-hover:scale-110 transition-transform shadow-lg shadow-sky-500/20">
+                                <i class="fa-solid fa-gamepad"></i>
+                            </div>
+                            <span class="text-[11px] font-mono-tech text-gray-300 block">Fly Forward</span>
+                        </button>
+
+                        <button onclick="openOSApp('МегаКИпишь')" class="space-y-2 group">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-gear-gvozd/20 border border-gear-gvozd/40 flex items-center justify-center text-gear-gvozd text-2xl group-hover:scale-110 transition-transform shadow-lg shadow-gear-gvozd/20">
+                                <i class="fa-solid fa-film"></i>
+                            </div>
+                            <span class="text-[11px] font-mono-tech text-gray-300 block">МегаКИпишь</span>
+                        </button>
+
+                        <button onclick="openOSApp('Телефон voxel')" class="space-y-2 group">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-gear-gold/20 border border-gear-gold/40 flex items-center justify-center text-gear-gold text-2xl group-hover:scale-110 transition-transform shadow-lg shadow-gear-gold/20">
+                                <i class="fa-solid fa-mobile-screen"></i>
+                            </div>
+                            <span class="text-[11px] font-mono-tech text-gray-300 block">voxel Sync</span>
+                        </button>
+
+                    </div>
+
+                    <!-- Simulator Message -->
+                    <div id="os-notification" class="glass-card p-3 rounded-xl border border-gear-fire/30 text-xs font-mono-tech text-center text-gear-gold z-10">
+                        Система UPC OS на готове. Кликните на любое приложение в симуляторе.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="gvozd" class="py-24 px-6 relative z-10 bg-gradient-to-b from-black via-slate-950 to-black">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="glass-panel rounded-3xl p-8 md:p-12 border-2 border-gear-gvozd/40 relative overflow-hidden shadow-[0_0_50px_rgba(255,0,85,0.25)]">
+                
+                <div class="space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gear-gvozd/20 border border-gear-gvozd/50 text-gear-gvozd text-xs font-mono-tech tracking-wider uppercase">
+                        <i class="fa-solid fa-clapperboard"></i> ANIMATION DIVISION
+                    </div>
+
+                    <h2 class="text-4xl sm:text-6xl font-black uppercase text-white tracking-tight">
+                        GVOZD <span class="text-gradient-gvozd">PRODUCTION</span>
+                    </h2>
+
+                    <p class="text-gray-300 text-lg leading-relaxed max-w-3xl">
+                        Анимационное подразделение студии Gear ATF. Мы создаем зажигательные мультпроекты и фирменную анимацию.
+                    </p>
+
+                    <!-- MegaKipish Animation Highlight Card -->
+                    <div class="glass-card p-8 rounded-3xl border border-gear-gvozd/40 space-y-4 max-w-2xl bg-black/70 relative overflow-hidden">
+                        <div class="absolute -top-12 -right-12 w-32 h-32 bg-gear-gvozd/20 rounded-full blur-2xl"></div>
+
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <span class="text-xs font-mono-tech text-gear-gvozd uppercase tracking-widest">// Флагманский Анимационный Проект</span>
+                            <span class="px-3 py-1 rounded-full bg-gear-gvozd text-black text-xs font-bold font-orbitron">В ПРОИЗВОДСТВЕ</span>
+                        </div>
+
+                        <h3 class="text-3xl sm:text-5xl font-black text-white font-orbitron">«МегаКИпишь»</h3>
+                        
+                        <p class="text-base text-gray-300 leading-relaxed">
+                            Главный анимационный проект от Gvozd Production! Фирменный стиль, юмор, харизматичные персонажи и нескончаемый драйв.
+                        </p>
+
+                        <div class="pt-4 flex items-center gap-4 text-xs font-mono-tech text-gear-gvozd">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles"></i> 2D/3D Animation</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-fire"></i> Original Story</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section id="terminal" class="py-24 px-6 relative z-10">
+        <div class="max-w-4xl mx-auto space-y-6">
+            
+            <div class="text-center space-y-2">
+                <span class="text-xs font-mono-tech text-gear-fire uppercase tracking-widest">// KERNEL INTERACTIVE CONSOLE</span>
+                <h2 class="text-3xl font-black text-white uppercase">Терминал <span class="text-gradient-fire">Gear ATF</span></h2>
+                <p class="text-sm text-gray-400">Введите <code class="text-gear-flame font-mono-tech">help</code> для просмотра списка команд</p>
+            </div>
+
+            <!-- Terminal GUI Window -->
+            <div class="glass-panel rounded-2xl border border-gear-fire/40 overflow-hidden shadow-2xl font-mono-tech text-sm">
+                
+                <div class="bg-black/80 px-4 py-3 border-b border-gear-fire/20 flex items-center justify-between text-xs text-gray-400">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
+                        <span class="ms-2 text-gear-flame">gear-atf-kernel v2.5</span>
+                    </div>
+                    <span>bash / terminal</span>
+                </div>
+
+                <div id="terminal-body" class="p-6 h-80 overflow-y-auto space-y-3 bg-black/90 text-green-400">
+                    <p class="text-gray-500">// Gear ATF Interactive Shell Initialization Complete.</p>
+                    <p class="text-gear-gold">Студия Gear ATF (Смартфон voxel, WoWyB, WoOx, UPC, UPH, Fly Forward, Telephone Horror & МегаКИпишь)</p>
+                    <p class="text-gear-fire">Введите "help" для справки по командам.</p>
+                </div>
+
+                <div class="bg-black px-6 py-3 border-t border-white/10 flex items-center gap-3">
+                    <span class="text-gear-fire font-bold">gear@atf:~$</span>
+                    <input type="text" id="terminal-input" class="w-full bg-transparent text-white focus:outline-none font-mono-tech text-sm" placeholder="Введите команду..." autocomplete="off">
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 px-6 relative z-10 bg-black/60 border-t border-gear-fire/20">
+        <div class="max-w-7xl mx-auto space-y-12">
+            
+            <div class="text-center space-y-4">
+                <span class="text-xs font-mono-tech text-gear-fire uppercase tracking-widest">// GET IN TOUCH</span>
+                <h2 class="text-4xl sm:text-5xl font-black text-white uppercase">Контакты <span class="text-gradient-fire">Gear ATF</span></h2>
+                <p class="text-gray-400 max-w-xl mx-auto">
+                    Свяжитесь с нами напрямую по любым вопросам разработки, гаджетов, операционных систем или анимации!
+                </p>
+            </div>
+
+            <!-- Verified Contact Cards Grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                
+                <!-- Email Contact -->
+                <a href="mailto:codes4sss@gmail.com" class="glass-card p-6 rounded-2xl border border-gear-fire/30 flex flex-col items-center text-center space-y-4 hover:border-gear-fire group">
+                    <div class="w-14 h-14 rounded-2xl bg-gear-fire/20 border border-gear-fire/40 flex items-center justify-center text-gear-fire text-2xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-mono-tech text-gray-400 uppercase">Официальный Email</div>
+                        <div class="text-base font-bold text-white mt-1">codes4sss@gmail.com</div>
+                    </div>
+                    <span class="text-xs font-orbitron text-gear-flame uppercase">Написать письмо →</span>
+                </a>
+
+                <!-- Studio Telegram Channel -->
+                <a href="https://t.me/Rolh34" target="_blank" class="glass-card p-6 rounded-2xl border border-sky-500/30 flex flex-col items-center text-center space-y-4 hover:border-sky-400 group">
+                    <div class="w-14 h-14 rounded-2xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-sky-400 text-2xl group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-telegram"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-mono-tech text-gray-400 uppercase">Telegram Канал Студии</div>
+                        <div class="text-base font-bold text-white mt-1">t.me/Rolh34</div>
+                    </div>
+                    <span class="text-xs font-orbitron text-sky-400 uppercase">Перейти в канал →</span>
+                </a>
+
+                <!-- Creator Personal Telegram -->
+                <a href="https://t.me/sashaHock85" target="_blank" class="glass-card p-6 rounded-2xl border border-gear-gold/30 flex flex-col items-center text-center space-y-4 hover:border-gear-gold group">
+                    <div class="w-14 h-14 rounded-2xl bg-gear-gold/20 border border-gear-gold/40 flex items-center justify-center text-gear-gold text-2xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-user-astronaut"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-mono-tech text-gray-400 uppercase">Создатель Студии</div>
+                        <div class="text-base font-bold text-white mt-1">t.me/sashaHock85</div>
+                    </div>
+                    <span class="text-xs font-orbitron text-gear-gold uppercase">Написать создателю →</span>
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="py-12 px-6 border-t border-white/10 relative z-10 bg-black">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <span class="font-orbitron font-black text-lg text-white">GEAR <span class="text-gear-fire">ATF</span></span>
+                <span class="text-xs font-mono-tech text-gray-500">© GEAR ATF STUDIO. ALL RIGHTS RESERVED.</span>
+            </div>
+
+            <div class="flex space-x-6 text-gray-400 text-sm font-mono-tech">
+                <a href="https://t.me/Rolh34" target="_blank" class="hover:text-gear-fire transition-colors">Telegram</a>
+                <a href="https://t.me/sashaHock85" target="_blank" class="hover:text-gear-gold transition-colors">Создатель</a>
+                <a href="mailto:codes4sss@gmail.com" class="hover:text-gear-fire transition-colors">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Fire Glow Cursor
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 250, fill: "forwards" });
+        });
+
+        // Background Ember Sparks Canvas Engine
+        const sparksCanvas = document.getElementById('sparks-canvas');
+        const ctxSparks = sparksCanvas.getContext('2d');
+
+        function resizeSparksCanvas() {
+            sparksCanvas.width = window.innerWidth;
+            sparksCanvas.height = window.innerHeight;
+        }
+        resizeSparksCanvas();
+        window.addEventListener('resize', resizeSparksCanvas);
+
+        const sparks = [];
+        for (let i = 0; i < 60; i++) {
+            sparks.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                size: Math.random() * 2.5 + 1,
+                speedX: (Math.random() - 0.5) * 0.8,
+                speedY: -Math.random() * 1.8 - 0.6,
+                opacity: Math.random()
+            });
+        }
+
+        function animateSparks() {
+            ctxSparks.clearRect(0, 0, sparksCanvas.width, sparksCanvas.height);
+
+            sparks.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.y < 0) {
+                    p.y = sparksCanvas.height;
+                    p.x = Math.random() * sparksCanvas.width;
+                }
+
+                ctxSparks.fillStyle = `rgba(255, 119, 0, ${p.opacity})`;
+                ctxSparks.beginPath();
+                ctxSparks.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctxSparks.fill();
+            });
+
+            requestAnimationFrame(animateSparks);
+        }
+        animateSparks();
+
+        // Flaming Gear Emblem Canvas Renderer Engine
+        function createFlamingGearRenderer(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let rotation = 0;
+
+            const flames = [];
+            for (let i = 0; i < 35; i++) {
+                flames.push({
+                    x: (Math.random() - 0.5) * (size * 0.5),
+                    y: (Math.random() - 0.5) * (size * 0.2),
+                    vx: (Math.random() - 0.5) * 1.2,
+                    vy: -Math.random() * 3 - 1.2,
+                    life: Math.random() * 25 + 10,
+                    maxLife: 35,
+                    size: Math.random() * (size * 0.09) + 3
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const cx = canvas.width / 2;
+                const cy = canvas.height / 2;
+
+                // 1. Render Rotating Metallic Gear Base
+                rotation += 0.018;
+                ctx.save();
+                ctx.translate(cx, cy + (size * 0.05));
+                ctx.rotate(rotation);
+
+                const outerR = size * 0.36;
+                const innerR = size * 0.26;
+                const teeth = 10;
+
+                ctx.beginPath();
+                ctx.fillStyle = '#0c0e16';
+                ctx.strokeStyle = '#FF3300';
+                ctx.lineWidth = Math.max(2, size * 0.018);
+
+                for (let i = 0; i < teeth; i++) {
+                    const a1 = (i * 2 * Math.PI) / teeth;
+                    const a2 = ((i + 0.5) * 2 * Math.PI) / teeth;
+
+                    ctx.lineTo(Math.cos(a1) * outerR, Math.sin(a1) * outerR);
+                    ctx.lineTo(Math.cos(a2) * innerR, Math.sin(a2) * innerR);
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Inner Gear Hub
+                ctx.beginPath();
+                ctx.arc(0, 0, size * 0.1, 0, Math.PI * 2);
+                ctx.fillStyle = '#FF5500';
+                ctx.fill();
+
+                ctx.restore();
+
+                // 2. Render Flame Simulation Particles Over the Gear
+                flames.forEach(f => {
+                    f.x += f.vx;
+                    f.y += f.vy;
+                    f.life--;
+
+                    if (f.life <= 0) {
+                        f.x = (Math.random() - 0.5) * (size * 0.55);
+                        f.y = size * 0.12;
+                        f.vy = -Math.random() * 3 - 1.2;
+                        f.life = f.maxLife;
+                    }
+
+                    const progress = f.life / f.maxLife;
+                    ctx.beginPath();
+                    ctx.arc(cx + f.x, cy + f.y - (size * 0.12), f.size * progress, 0, Math.PI * 2);
+
+                    if (progress > 0.65) ctx.fillStyle = '#FFCC00';
+                    else if (progress > 0.3) ctx.fillStyle = '#FF7700';
+                    else ctx.fillStyle = '#FF1100';
+
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        // Initialize Gear Logo Animations
+        createFlamingGearRenderer('logo-flaming-gear', 55);
+        createFlamingGearRenderer('hero-flaming-gear-canvas', 380);
+
+        // Mobile Navigation Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // Ecosystem Filters Toggle Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const ecoCards = document.querySelectorAll('.eco-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-gear-fire', 'text-black');
+                    b.classList.add('glass-card', 'text-gray-300');
+                });
+                btn.classList.add('active', 'bg-gear-fire', 'text-black');
+                btn.classList.remove('glass-card', 'text-gray-300');
+
+                const filter = btn.getAttribute('data-filter');
+
+                ecoCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // OS Live Simulator Controls
+        const simBtnUPC = document.getElementById('sim-btn-upc');
+        const simBtnUPH = document.getElementById('sim-btn-uph');
+        const osSysTitle = document.getElementById('os-sys-title');
+        const osNotification = document.getElementById('os-notification');
+
+        simBtnUPC.addEventListener('click', () => {
+            simBtnUPC.className = 'px-4 py-1.5 rounded-lg text-xs font-orbitron font-bold uppercase transition-all bg-gear-fire text-black shadow-md';
+            simBtnUPH.className = 'px-4 py-1.5 rounded-lg text-xs font-orbitron font-bold uppercase transition-all bg-white/10 text-gray-300 hover:text-white';
+            osSysTitle.innerHTML = '<i class="fa-solid fa-desktop me-2"></i>Gear ATF UPC OS Active';
+            osNotification.innerText = 'Переключено на десктопную систему UPC OS (ПК и ноутбук WoWyB).';
+        });
+
+        simBtnUPH.addEventListener('click', () => {
+            simBtnUPH.className = 'px-4 py-1.5 rounded-lg text-xs font-orbitron font-bold uppercase transition-all bg-gear-flame text-black shadow-md';
+            simBtnUPC.className = 'px-4 py-1.5 rounded-lg text-xs font-orbitron font-bold uppercase transition-all bg-white/10 text-gray-300 hover:text-white';
+            osSysTitle.innerHTML = '<i class="fa-solid fa-mobile-screen-button me-2"></i>Gear ATF UPH OS Active (voxel Smartphone)';
+            osNotification.innerText = 'Переключено на мобильную сенсорную UPH OS (смартфон voxel и планшет WoOx).';
+        });
+
+        function openOSApp(appName) {
+            osNotification.innerText = `[Запуск]: Приложение "${appName}" открыто на симуляторе!`;
+        }
+
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('os-clock').innerText = now.toTimeString().split(' ')[0].substring(0, 5);
+        }, 1000);
+
+        // Terminal Shell Logic
+        const terminalInput = document.getElementById('terminal-input');
+        const terminalBody = document.getElementById('terminal-body');
+
+        terminalInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const cmd = terminalInput.value.trim().toLowerCase();
+                appendTerminalLine(`gear@atf:~$ ${cmd}`, 'text-white');
+                processCommand(cmd);
+                terminalInput.value = '';
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            }
+        });
+
+        function appendTerminalLine(text, colorClass = 'text-green-400') {
+            const p = document.createElement('p');
+            p.className = colorClass;
+            p.innerText = text;
+            terminalBody.appendChild(p);
+        }
+
+        function processCommand(cmd) {
+            switch (cmd) {
+                case 'help':
+                    appendTerminalLine('Доступные команды Gear ATF Shell:', 'text-gear-gold');
+                    appendTerminalLine('  sysinfo      - Сведения о студии и ядрах');
+                    appendTerminalLine('  devices      - Гаджеты (voxel, WoWyB, WoOx)');
+                    appendTerminalLine('  os           - Информация об ОС UPC и UPH');
+                    appendTerminalLine('  games        - Игры (Fly Forward, Telephone)');
+                    appendTerminalLine('  megakipish   - Анимационный проект Gvozd production');
+                    appendTerminalLine('  contacts     - Официальные контакты');
+                    appendTerminalLine('  clear        - Очистить консоль');
+                    break;
+                case 'sysinfo':
+                    appendTerminalLine('GEAR ATF TECH STUDIO CORE v2.5', 'text-gear-fire');
+                    appendTerminalLine('Инновационные гаджеты, универсальные ОС, аркады, хорроры и анимация.');
+                    break;
+                case 'devices':
+                    appendTerminalLine('• voxel - Сенсорный смартфон нового поколения (UPH OS)', 'text-gray-300');
+                    appendTerminalLine('• WoWyB - Мощный ноутбук для вычислений и 3D (UPC OS)', 'text-gray-300');
+                    appendTerminalLine('• WoOx - Сенсорный планшет (UPH OS)', 'text-gray-300');
+                    break;
+                case 'os':
+                    appendTerminalLine('• UPH OS - Для смартфонов и сенсорных гаджетов', 'text-gear-flame');
+                    appendTerminalLine('• UPC OS - Для компьютеров и ноутбуков', 'text-gear-fire');
+                    appendTerminalLine('Обе системы можно установить абсолютно на ЛЮБОЕ устройство!', 'text-gear-gold');
+                    break;
+                case 'games':
+                    appendTerminalLine('• Fly Forward - Динамичная RPG arcade игра', 'text-sky-400');
+                    appendTerminalLine('• Telephone - Хоррор с выживанием и звонками', 'text-red-400');
+                    break;
+                case 'megakipish':
+                    appendTerminalLine('GVOZD PRODUCTION: Проект "МегаКИпишь" находится в активном производстве!', 'text-gear-gvozd');
+                    break;
+                case 'contacts':
+                    appendTerminalLine('Email: codes4sss@gmail.com', 'text-gear-flame');
+                    appendTerminalLine('Telegram Канал: https://t.me/Rolh34', 'text-sky-400');
+                    appendTerminalLine('Создатель: https://t.me/sashaHock85', 'text-gear-gold');
+                    break;
+                case 'clear':
+                    terminalBody.innerHTML = '';
+                    break;
+                case '':
+                    break;
+                default:
+                    appendTerminalLine(`Команда не найдена: "${cmd}". Введите "help"`, 'text-red-400');
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
